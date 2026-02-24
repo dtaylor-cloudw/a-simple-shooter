@@ -22,13 +22,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
     }
 })
-// When you shoot a sprite
+// When you shoot an enemy
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.disintegrate, 500)
     sprites.destroy(otherSprite)
     music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.UntilDone)
     info.changeScoreBy(1)
 })
+// When player hits an enemy
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.ashes, 500)
     scene.cameraShake(4, 500)
@@ -66,6 +67,7 @@ game.onUpdate(function () {
     controller.moveSprite(PlayerShip, 100, 0)
     PlayerShip.setStayInScreen(true)
 })
+// Game Over state
 game.onUpdate(function () {
     game.setGameOverEffect(false, effects.melt)
     game.setGameOverMessage(false, "YOU LOSE!")
